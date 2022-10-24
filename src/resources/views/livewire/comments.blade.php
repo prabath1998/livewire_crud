@@ -41,13 +41,13 @@
                 <i wire:click='remove({{ $comment->id }})'
                     class="fas fa-times text-red-200 hover:text-red-600 cursor-pointer"></i>
             </div>
-            <p class="text-gray-800">{{ $comment->body }}</p>
+            <p class="text-gray-700">{{ $comment->body }}</p>
             {{-- @if ($comment->image)
                 <img src="{{ $comment->imagePath }}" />
             @endif --}}
         </div>
     @endforeach
-    {{-- {{ $comments->links('pagination-links') }} --}}
+    {{ $comments->links() }}
 </div>
 
 {{-- <script>
