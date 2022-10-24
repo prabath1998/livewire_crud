@@ -34,6 +34,7 @@ class Comments extends Component
         session()->flash('message', 'Comment added successfully..! 🤪');
     }
 
+    //update comment
     public function updated($field)
     {
         $this->validateOnly($field, ['newComment' => 'required|max:255']);
