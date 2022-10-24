@@ -3,7 +3,7 @@
     @error('newComment')
         <span class="text-red-500 text-xs">{{ $message }}</span>
     @enderror
-    <div>
+    <div class="mb-3">
         @if (session()->has('message'))
             <div class="p-3 bg-green-300 text-green-800 rounded shadow-sm">
                 {{ session('message') }}

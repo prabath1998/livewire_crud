@@ -26,6 +26,8 @@ class Comments extends Component
         $createdComment = Comment::create(['body' => $this->newComment, 'user_id' => 1]);
         $this->comments->prepend($createdComment);
         $this->newComment = '';
+
+        session()->flash('message', 'Comment added successfully..! 🤪');
     }
 
     public function mount()
@@ -44,5 +46,6 @@ class Comments extends Component
         $comment = Comment::find($commentId);
         $comment->delete();
         $this->comments = $this->comments->except($commentId);
+        session()->flash('message', 'Comment deleted successfully..! 🤩');
     }
 }
