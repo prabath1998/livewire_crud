@@ -38,4 +38,11 @@ class Comments extends Component
     {
         $this->validateOnly($field, ['newComment' => 'required|max:255']);
     }
+
+    public function remove($commentId)
+    {
+        $comment = Comment::find($commentId);
+        $comment->delete();
+        $this->comments = $this->comments->except($commentId);
+    }
 }
