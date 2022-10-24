@@ -18,8 +18,11 @@
         <input type="file" id="image" wire:change="$emit('fileChoosen')">
     </section>
 
+    @error('newRecord')
+        <span class="text-red-500 text-xs">{{ $message }}</span>
+    @enderror
     <form class="my-4 flex" wire:submit.prevent="addComment">
-        <input type="text" wire:model.lazy='newComment' class="w-full rounded border shadow p-2 mr-2 my-2"
+        <input type="text" wire:model.debounce.500ms='newComment' class="w-full rounded border shadow p-2 mr-2 my-2"
             placeholder="What's in your mind.">
         <div class="py-2">
             <button type="submit" name="body"

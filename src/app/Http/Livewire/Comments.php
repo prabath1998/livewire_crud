@@ -20,9 +20,9 @@ class Comments extends Component
 
     public function addComment()
     {
-        if ($this->newComment == '') {
-            return;
-        }
+
+        $this->validate(['newComment' => 'required|max:255']);
+
         $createdComment = Comment::create(['body' => $this->newComment, 'user_id' => 1]);
         $this->comments->prepend($createdComment);
         $this->newComment = '';
@@ -32,5 +32,10 @@ class Comments extends Component
     {
         $initialComments = Comment::latest()->get();
         $this->comments = $initialComments;
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field, ['newComment' => 'required|max:255']);
     }
 }
