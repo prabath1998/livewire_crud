@@ -8,3 +8,4 @@ RUN apk --update add composer
 RUN docker-php-ext-install pdo_mysql
 RUN apk add --update npm
 RUN apk add --update make
+

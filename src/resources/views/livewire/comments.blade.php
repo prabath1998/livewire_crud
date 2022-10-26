@@ -1,4 +1,4 @@
-<div class="container mx-auto">
+<div class="container mx-auto col">
     <h1 class="text-3xl">Comments</h1>
     @error('newComment')
         <span class="text-red-500 text-xs">{{ $message }}</span>
@@ -12,9 +12,9 @@
     </div>
 
     <section>
-        {{-- @if ($image)
+        @if ($image)
             <img src={{ $image }} width="200" />
-        @endif --}}
+        @endif
         <input type="file" id="image" wire:change="$emit('fileChoosen')">
     </section>
 
@@ -42,15 +42,15 @@
                     class="fas fa-times text-red-200 hover:text-red-600 cursor-pointer"></i>
             </div>
             <p class="text-gray-700">{{ $comment->body }}</p>
-            {{-- @if ($comment->image)
-                <img src="{{ $comment->imagePath }}" />
-            @endif --}}
+
+            {{-- <img src="{{ $image }}" width="200" /> --}}
+
         </div>
     @endforeach
     {{ $comments->links('pagination-links') }}
 </div>
 
-{{-- <script>
+<script>
     window.livewire.on('fileChoosen', () => {
         let inputField = document.getElementById('image')
         let file = inputField.files[0]
@@ -60,4 +60,4 @@
         }
         reader.readAsDataURL(file);
     })
-</script> --}}
+</script>

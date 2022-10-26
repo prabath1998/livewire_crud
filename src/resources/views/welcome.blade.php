@@ -10,11 +10,18 @@
         integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <script src="https://cdn.tailwindcss.com"></script>
     @livewireStyles
+    @livewireScripts
 </head>
 
 <body>
-    {{-- @livewire('comments') --}}
-    <livewire:comments />
+    <div class="w-10/12 my-10 flex">
+        <div class="w-5/12 rounded border p-2">
+            <livewire:tickets />
+        </div>
+        <div class="w-7/12 mx-2 rounded border p-2">
+            <livewire:comments />
+        </div>
+    </div>
     @livewireScripts
 </body>
 

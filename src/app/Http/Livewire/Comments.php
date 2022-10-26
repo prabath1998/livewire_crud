@@ -5,20 +5,34 @@ namespace App\Http\Livewire;
 use App\Models\Comment;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutEvents;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Intervention\Image\ImageManagerStatic;
 
 class Comments extends Component
 {
 
     use WithPagination;
-    public $newComment;
 
+    public $newComment;
+    public $image;
+    public $ticketId = 1;
+
+    protected $listeners = [
+        'fileUpload' => 'handleFilepUpload',
+        'ticketSelected',
+    ];
+
+    public function handleFilepUpload($imageData)
+    {
+        $this->image = $imageData;
+    }
 
     public function render()
     {
         return view('livewire.comments', [
-            'comments' => Comment::latest()->paginate(2)
+            'comments' => Comment::where('support_ticket_id',$this->ticketId)->latest()->paginate(2)
         ]);
     }
 
@@ -26,11 +40,18 @@ class Comments extends Component
     {
 
         $this->validate(['newComment' => 'required|max:255']);
+        $image = $this->storeImage();
 
-        $createdComment = Comment::create(['body' => $this->newComment, 'user_id' => 1]);
-
+        $createdComment = Comment::create(
+            [
+                'body' => $this->newComment,
+                'user_id' => 1,
+                'image' => $image,
+                'support_ticket_id' => $this->ticketId,
+            ]
+        );
         $this->newComment = '';
-
+        $this->image = '';
         session()->flash('message', 'Comment added successfully..! 🤪');
     }
 
@@ -45,5 +66,21 @@ class Comments extends Component
         $comment = Comment::find($commentId);
         $comment->delete();
         session()->flash('message', 'Comment deleted successfully..! 🤩');
+    }
+
+    public function storeImage()
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        $img = ImageManagerStatic::make($this->image)->encode('jpg');
+        Storage::put('image.jpg', $this->image);
+    }
+
+
+    public function ticketSelected($ticketId)
+    {
+        $this->ticketId = $ticketId;
     }
 }
